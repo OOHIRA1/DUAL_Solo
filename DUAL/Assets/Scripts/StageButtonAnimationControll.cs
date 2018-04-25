@@ -25,12 +25,10 @@ public class StageButtonAnimationControll : MonoBehaviour {
 
 	//--ボタンをアップする関数
 	public void Up( GameObject x ) {
-		//RectTransform rectTransform = x.gameObject.GetComponent<RectTransform>();
-		//rectTransform.anchoredPosition = new Vector2 ( 0, 0 );
-		StartCoroutine( "UpCoroutin", x );
+		StartCoroutine( "UpCoroutine", x );
 	}
 
-	public IEnumerator UpCoroutin( GameObject button ) {
+	public IEnumerator UpCoroutine( GameObject button ) {
 		const int ANIMATION_FLAME = 90;
 		const int MOVE_FLAME = 60;
 		const int EXPAND_FLAME = ANIMATION_FLAME - MOVE_FLAME;
