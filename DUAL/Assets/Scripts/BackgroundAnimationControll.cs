@@ -10,13 +10,14 @@ public class BackgroundAnimationControll : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		_animator = GetComponent<Animator> ();
+		_animator          = GetComponent<Animator> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+
 
 	//---------------------------------------------------------------
 	//public関数
@@ -38,6 +39,16 @@ public class BackgroundAnimationControll : MonoBehaviour {
 	public bool GetRemovedFlag( ) {
 		return _animator.GetBool ( "removedFlag" );
 	}
+
+
+	//--Stateがwait状態かどうかを返す関数
+	public bool IsStateWait( ) {
+		int layer                           = _animator.GetLayerIndex ( "Base Layer" );
+		AnimatorStateInfo animatorStateInfo = _animator.GetCurrentAnimatorStateInfo ( layer );
+
+		return animatorStateInfo.IsName ( "wait" );
+	}
+		
 	//---------------------------------------------------------------
 	//---------------------------------------------------------------
 }
