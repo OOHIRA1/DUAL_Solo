@@ -31,17 +31,27 @@ public class StageButtonAnimationControll : MonoBehaviour {
 	}
 
 	public IEnumerator UpCoroutin( GameObject button ) {
-		const int ANIMATIONFLAME = 90;
+		const int ANIMATION_FLAME = 90;
+		const int MOVE_FLAME = 60;
+		const int EXPAND_FLAME = ANIMATION_FLAME - MOVE_FLAME;
+		const int MAX_SIZE_X = 180;
+		const int MAX_SIZE_Y = 250;
 		RectTransform rectTransform = button.GetComponent<RectTransform>();
-		Vector2 vec = -rectTransform.anchoredPosition / ( ANIMATIONFLAME - 30 );
-		Vector3 rotation = new Vector3( 0, 180 / (ANIMATIONFLAME - 30), 0);
-		for (int i = 0; i < ANIMATIONFLAME; i++) {
-			if (i < ANIMATIONFLAME - 30) {
+		Vector2 vec = -rectTransform.anchoredPosition / MOVE_FLAME;
+		Vector3 rotation = new Vector3( 0, 180 / MOVE_FLAME, 0);
+		Vector2 sizaDelta = new Vector2 ( ( MAX_SIZE_X - rectTransform.sizeDelta.x ) / EXPAND_FLAME, ( MAX_SIZE_Y - rectTransform.sizeDelta.y ) / EXPAND_FLAME );
+		for (int i = 0; i < ANIMATION_FLAME; i++) {
+			if (i < MOVE_FLAME) {
 				rectTransform.anchoredPosition += vec;
 				rectTransform.localEulerAngles += rotation;
-			} else if (i == ANIMATIONFLAME - 30) {
+			} else if (i == MOVE_FLAME) {
 				rectTransform.anchoredPosition = Vector2.zero;
-				rectTransform.localEulerAngles = new Vector3 ( 0, 180, 0 );
+				rectTransform.localEulerAngles = new Vector3 (0, 180, 0);
+			} else if (i > MOVE_FLAME) {
+				rectTransform.sizeDelta += sizaDelta;
+			}
+			if (i == ANIMATION_FLAME - 1) {
+				rectTransform.sizeDelta = new Vector2 ( MAX_SIZE_X, MAX_SIZE_Y );
 			}
 			yield return null;
 		}
